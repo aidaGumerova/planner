@@ -6,5 +6,5 @@ export type TTask = {
   urgent: boolean;
   name: MayBe<string>;
   description: MayBe<string>;
-  status: MayBe<boolean>
+  status: MayBe<boolean>;
 };

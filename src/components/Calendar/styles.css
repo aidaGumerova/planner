@@ -1,43 +1,60 @@
-.week {
+.weeks {
+  overflow: hidden;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+}
+
+.week {
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
+}
+
+.days-wrapper {
+  width: 100%;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
 }
 
 .day {
-  flex: 1;
   display: flex;
-  flex-direction: column;
-  margin: 10px 5px;
+  flex: 1 1 auto;
+  padding: 8px 4px;
+  width: 12.5%;
+}
+
+.content-day-wrapper {
+  padding: 8px;
   border: 1px solid #cccccc;
   border-radius: 10px;
-  padding: 8px;
-  width: 250px;
-  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
 }
 
 .day h4 {
-   margin: 0 0 5px 0;
+  margin: 0 0 5px 0;
 }
 
-.tasks{
+.tasks {
   text-align: left;
   font-size: 90%;
 }
 
-.task.add{
+.task.add {
   background: none;
   border: none;
   display: block;
 }
 
-.task.add:hover{
+.task.add:hover {
   background-color: #61dafb;
   color: #ffffff;
   border-color: #eeeeee;
 }
 
-.task{
+.task {
   text-align: left;
   height: 45px;
   width: 100%;
@@ -54,46 +71,45 @@
   overflow: hidden;
 }
 
-.noname{
+.noname {
   color: #6d6d6d;
 }
 
-.task-value div{
+.task-value div {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
 }
 
-.task-status{
+.task-status {
   padding: 3px;
 }
 
-.task-status svg{
-
+.task-status svg {
 }
 
-.task-value{
+.task-value {
 }
 
-.task .delete{
+.task .delete {
   width: auto;
   padding: 0;
   background: none;
   border: none;
 }
 
-.delete:hover svg{
+.delete:hover svg {
   color: red;
 }
 
-.warning{
+.warning {
   color: red;
 }
 
-.week-block{
+.week-block {
   display: flex;
 }
 
-.week-name{
+.week-name {
   flex: 1;
 }

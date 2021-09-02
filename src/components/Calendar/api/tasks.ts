@@ -1,4 +1,4 @@
-import {TTask} from "../types";
+import { TTask } from "../types";
 
 const TASKS_LOCAL_KEY = "TASKS";
 
@@ -21,7 +21,7 @@ export const addTask = (task: TTask): boolean => {
 
 export const editTask = (task: TTask): boolean => {
   const tasks = getTasks();
-  const newTasks = [...tasks.filter(t => t.id !== task.id), task]
+  const newTasks = [...tasks.filter((t) => t.id !== task.id), task];
   const tasksString = JSON.stringify(newTasks);
   localStorage.setItem(TASKS_LOCAL_KEY, tasksString);
   return true;
@@ -29,9 +29,9 @@ export const editTask = (task: TTask): boolean => {
 
 export const deleteTask = (taskId: number): boolean => {
   const tasks = getTasks();
-  const newTasks = [...tasks.filter(t => t.id !== taskId)]
-  console.log(newTasks)
+  const newTasks = [...tasks.filter((t) => t.id !== taskId)];
+  console.log(newTasks);
   const tasksString = JSON.stringify(newTasks);
   localStorage.setItem(TASKS_LOCAL_KEY, tasksString);
   return true;
-}
+};

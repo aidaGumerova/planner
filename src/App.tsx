@@ -27,14 +27,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
   const classes = useStyles();
 
-  /*const scrollableWrapper = useRef<HTMLDivElement>(null);
-
-  const handleScroll = () => {
-    if (scrollableWrapper.current) {
-      scrollableWrapper.current.scrollTo({ left: scrollableWrapper.current.scrollWidth, behavior: 'smooth' });
-    }
-  };*/
-
   return (
     <div className="App">
       <div className={classes.root}>
@@ -55,16 +47,6 @@ function App() {
         </AppBar>
       </div>
       <Week />
-
-      {/*<div
-        ref={scrollableWrapper}
-        style={{ width: "500px", overflow: "hidden", height: "100px" }}
-      >
-        <div
-          style={{ width: "1000px", height: "100%", border: "10px solid red" }}
-        >1222222</div>
-      </div>
-      <button onClick={handleScroll}>scroll</button>*/}
     </div>
   );
 }

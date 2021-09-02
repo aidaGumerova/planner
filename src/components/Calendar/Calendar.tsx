@@ -1,9 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
-import { TTask} from "./types";
+import { TTask } from "./types";
 import { CalendarCell } from "./CalendarCell/CalendarCell";
 
 import "./styles.css";
-import {addTask, getTasks} from "./api/tasks";
+import { addTask, getTasks } from "./api/tasks";
 
 /*const initialDayTasks: TTask[] = [
   {
@@ -144,7 +144,7 @@ export const Calendar: FC = () => {
   const getTasksFromStore = () => {
     const tasksFromStore = getTasks();
     setDayTasks(tasksFromStore);
-  }
+  };
 
   useEffect(() => {
     getTasksFromStore();
@@ -154,7 +154,7 @@ export const Calendar: FC = () => {
     if (addTask(task)) {
       getTasksFromStore();
     }
-  }
+  };
 
   return (
     <div className="wrapper">
@@ -165,9 +165,7 @@ export const Calendar: FC = () => {
       >
         23 августа - 29 августа
       </h1>
-      <div className="week">
-
-      </div>
+      <div className="week"></div>
     </div>
   );
 };

@@ -72,7 +72,7 @@ export const Modal: FC<Props> = ({ isOpen, task, onSave, onClose }) => {
   const handleSubmitForm = () => {
     if (values) {
       const newTaskModel: TTask = {
-        id: values.id ,
+        id: values.id,
         date: values.date ?? null,
         urgent: values.urgent ?? false,
         name: values.name ?? null,
@@ -80,7 +80,7 @@ export const Modal: FC<Props> = ({ isOpen, task, onSave, onClose }) => {
         status: values.status ?? null,
       };
       onSave(newTaskModel);
-      onClose()
+      onClose();
     }
   };
 
@@ -97,7 +97,7 @@ export const Modal: FC<Props> = ({ isOpen, task, onSave, onClose }) => {
           </DialogTitle>
           <DialogContent>
             <DialogContentText>
-              {(new Date(values?.date ? values?.date : 0)).toLocaleDateString()}
+              {new Date(values?.date ? values?.date : 0).toLocaleDateString()}
             </DialogContentText>
 
             <form name="taskForm" onSubmit={handleSubmitForm}>
@@ -116,7 +116,7 @@ export const Modal: FC<Props> = ({ isOpen, task, onSave, onClose }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={!values?.urgent ? false : true}
+                      checked={!!values?.urgent}
                       onChange={handleChangeUrgent}
                       name="urgent"
                       color="primary"

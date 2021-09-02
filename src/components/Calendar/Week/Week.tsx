@@ -13,6 +13,7 @@ import {
 import "../styles.css";
 import { CalendarCell } from "../CalendarCell/CalendarCell";
 import { addTask, deleteTask, editTask, getTasks } from "../api/tasks";
+import { useWeekContainer } from "./useWeekContainer";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -24,8 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
-
-const SCROLL_DELAY = 1000;
 
 const TODAY = new Date().setHours(0, 0, 0, 0);
 
@@ -59,34 +58,9 @@ export const Week: FC = ({}) => {
   }, []);
 
   const handleSave = (task: TTask): void => {
-    console.log(task, "handleSave");
     const saveFunction = !task.id ? addTask : editTask;
     if (saveFunction(task)) {
       getTasksFromStore();
-    }
-  };
-
-  const handleClickPreviousWeek = () => {
-    if (scrollableWrapperRef.current) {
-      scrollableWrapperRef.current.scrollTo({
-        left: 0,
-        behavior: "smooth",
-      });
-      setTimeout(() => {
-        setCurrentDay(currentDay - DAY_MILLISECONDS * 7);
-      }, SCROLL_DELAY);
-    }
-  };
-
-  const handleClickNextWeek = () => {
-    if (scrollableWrapperRef.current) {
-      scrollableWrapperRef.current.scrollTo({
-        left: scrollableWrapperRef.current.scrollWidth,
-        behavior: "smooth",
-      });
-      setTimeout(() => {
-        setCurrentDay(currentDay + DAY_MILLISECONDS * 7);
-      }, SCROLL_DELAY);
     }
   };
 
@@ -96,91 +70,84 @@ export const Week: FC = ({}) => {
     }
   };
 
-  const scrollableWrapperRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollableWrapperRef.current) {
-      scrollableWrapperRef.current.scrollTo({
-        left: scrollableWrapperRef.current.offsetWidth,
-      });
-    }
-  }, [currentDay, tasks]);
+  const { scrollableWrapperRef, handleClickPreviousWeek, handleClickNextWeek } =
+    useWeekContainer({
+      currentDay,
+      setCurrentDay,
+      tasks,
+    });
 
   return (
-    <>
-      <div className="wrapper">
-        <h1 className="week-block">
-          <Button
-            size="small"
-            className={classes.margin}
-            onClick={handleClickPreviousWeek}
-          >
-            <ArrowBackIcon />
-          </Button>
-          <span className="week-name">
-            {`${getFormatDay(currentWeek[0])} - ${getFormatDay(
-              currentWeek[6]
-            )}`}
-          </span>
-          <Button
-            size="small"
-            className={classes.margin}
-            onClick={handleClickNextWeek}
-          >
-            <ArrowForwardIcon />
-          </Button>
-        </h1>
-        <div className="weeks" ref={scrollableWrapperRef}>
-          <div className="week">
-            {previousWeek.map((day) => (
-              <div className="day">
-                <div className="content-day-wrapper">
-                  <h4>{getFormatDay(day)}</h4>
-                  <h4>{dayInWeek(day)}</h4>
-                  <CalendarCell
-                    day={day}
-                    dayTasks={getTasksByDay(tasks, day)}
-                    onSave={handleSave}
-                    onDelete={handleDeleteTask}
-                  />
-                </div>
+    <div className="wrapper">
+      <h1 className="week-block">
+        <Button
+          size="small"
+          className={classes.margin}
+          onClick={handleClickPreviousWeek}
+        >
+          <ArrowBackIcon />
+        </Button>
+        <span className="week-name">
+          {`${getFormatDay(currentWeek[0])} - ${getFormatDay(currentWeek[6])}`}
+        </span>
+        <Button
+          size="small"
+          className={classes.margin}
+          onClick={handleClickNextWeek}
+        >
+          <ArrowForwardIcon />
+        </Button>
+      </h1>
+      <div className="weeks" ref={scrollableWrapperRef}>
+        <div className="week">
+          {previousWeek.map((day) => (
+            <div className="day">
+              <div className="content-day-wrapper">
+                <h4>{getFormatDay(day)}</h4>
+                <h4>{dayInWeek(day)}</h4>
+                <CalendarCell
+                  day={day}
+                  dayTasks={getTasksByDay(tasks, day)}
+                  onSave={handleSave}
+                  onDelete={handleDeleteTask}
+                />
               </div>
-            ))}
-          </div>
-          <div className="week">
-            {currentWeek.map((day) => (
-              <div className="day">
-                <div className="content-day-wrapper">
-                  <h4>{getFormatDay(day)}</h4>
-                  <h4>{dayInWeek(day)}</h4>
-                  <CalendarCell
-                    day={day}
-                    dayTasks={getTasksByDay(tasks, day)}
-                    onSave={handleSave}
-                    onDelete={handleDeleteTask}
-                  />
-                </div>
+            </div>
+          ))}
+        </div>
+        <div className="week">
+          {currentWeek.map((day) => (
+            <div className="day">
+              <div className="content-day-wrapper">
+                <h4>{getFormatDay(day)}</h4>
+                <h4>{dayInWeek(day)}</h4>
+                <CalendarCell
+                  day={day}
+                  dayTasks={getTasksByDay(tasks, day)}
+                  onSave={handleSave}
+                  onDelete={handleDeleteTask}
+                />
               </div>
-            ))}
-          </div>
-          <div className="week">
-            {nextWeek.map((day) => (
-              <div className="day">
-                <div className="content-day-wrapper">
-                  <h4>{getFormatDay(day)}</h4>
-                  <h4>{dayInWeek(day)}</h4>
-                  <CalendarCell
-                    day={day}
-                    dayTasks={getTasksByDay(tasks, day)}
-                    onSave={handleSave}
-                    onDelete={handleDeleteTask}
-                  />
-                </div>
+            </div>
+          ))}
+        </div>
+        <div className="week">
+          {nextWeek.map((day) => (
+            <div className="day">
+              <div className="content-day-wrapper">
+                <h4>{getFormatDay(day)}</h4>
+                <h4>{dayInWeek(day)}</h4>
+                <CalendarCell
+                  day={day}
+                  dayTasks={getTasksByDay(tasks, day)}
+                  onSave={handleSave}
+                  onDelete={handleDeleteTask}
+                />
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };

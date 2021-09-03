@@ -11,3 +11,7 @@
 и запустить проект
 
 ### `npm start`
+
+# Демо
+
+[My Planner](https://aidagumerova.github.io/)

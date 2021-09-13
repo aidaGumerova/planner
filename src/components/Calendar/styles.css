@@ -24,17 +24,32 @@
 }
 
 .content-day-wrapper {
-  padding: 8px;
-  border: 1px solid #cccccc;
-  border-radius: 10px;
+  padding: 12px 8px 8px 8px;
+  background: #ffffff;
+  border-radius: 3px;
   display: flex;
   flex-direction: column;
   height: 100%;
   width: 100%;
 }
 
-.day h4 {
+.day h1,
+.day h2,
+.day h3,
+.day h4,
+.day h5,
+.day h6 {
   margin: 0 0 5px 0;
+}
+
+.day-headline h4,
+.day-headline h6{
+  text-align: left;
+  padding-left: 10px;
+}
+
+.day-headline h6{
+  color: rgba(0, 0, 0, 0.54)
 }
 
 .tasks {
@@ -45,7 +60,20 @@
 .task.add {
   background: none;
   border: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add {
+  margin: 3px 0;
+  width: 100%;
+  /* text-transform: none; */
+  /* justify-content: left;*/
+}
+
+.add svg {
+  margin-right: 8px;
 }
 
 .task.add:hover {
@@ -69,6 +97,7 @@
   border: none;
   background: none;
   overflow: hidden;
+  padding: 0;
 }
 
 .noname {
@@ -79,6 +108,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.task-value div:first-child {
+
 }
 
 .task-status {
@@ -104,6 +137,13 @@
 
 .warning {
   color: red;
+  padding-right: 5px;
+}
+
+.warning svg {
+  width: 0.8em;
+  height: 0.8em;
+  font-size: 1.2rem;
 }
 
 .week-block {

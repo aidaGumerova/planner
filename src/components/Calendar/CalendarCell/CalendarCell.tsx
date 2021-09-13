@@ -1,10 +1,23 @@
 import React, { FC, MouseEventHandler, useState } from "react";
 import { MayBe, TTask } from "../types";
+import AddIcon from '@material-ui/icons/Add';
+import Button from "@material-ui/core/Button";
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import DeleteOutlinedIcon from "@material-ui/icons/DeleteOutlined";
+import IconButton from '@material-ui/core/IconButton';
+import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import "moment/locale/fr";
 import "moment/locale/ru";
 import { Modal } from "./Modal";
 import Checkbox from "@material-ui/core/Checkbox";
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      margin: theme.spacing(1),
+    },
+  }),
+);
 
 type Props = {
   day: number;
@@ -19,6 +32,7 @@ export const CalendarCell: FC<Props> = ({
   onSave,
   onDelete,
 }) => {
+  const classes = useStyles();
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [editableTask, setEditableTask] = useState<MayBe<Partial<TTask>>>(null);
 
@@ -55,9 +69,13 @@ export const CalendarCell: FC<Props> = ({
         onClose={onClose}
       />
       <div className="tasks">
-        <button className="task add" onClick={() => openEditableModal(null)}>
-          + Добавить новую задачу{" "}
-        </button>
+        <Button
+          variant="outlined"
+          className = {classes.button}
+          startIcon={<AddIcon />}
+          color="primary"
+          onClick={() => openEditableModal(null)}>Добавить
+        </Button>
         {dayTasks.map((task) => (
           <div key={task.id} className="task">
             <Checkbox
@@ -72,7 +90,7 @@ export const CalendarCell: FC<Props> = ({
               className="task-value"
             >
               <div>
-                {task.urgent ? <span className="warning">! </span> : null}
+                {task.urgent ? <span className="warning"><ErrorOutlineOutlinedIcon/></span> : null}
                 {task.name}
               </div>
               <div>{task.description}</div>

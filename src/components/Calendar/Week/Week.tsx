@@ -1,6 +1,7 @@
 import React, { FC, useRef, useEffect, useState } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import { TTask } from "../types";
@@ -12,8 +13,9 @@ import {
 } from "../../utils";
 import "../styles.css";
 import { CalendarCell } from "../CalendarCell/CalendarCell";
-import { addTask, deleteTask, editTask, getTasks } from "../api/tasks";
+import { getTasks } from "../api/tasks";
 import { useWeekContainer } from "./useWeekContainer";
+import {useTaskHandlers} from "./useTaskHandlers";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -57,18 +59,9 @@ export const Week: FC = ({}) => {
     getTasksFromStore();
   }, []);
 
-  const handleSave = (task: TTask): void => {
-    const saveFunction = !task.id ? addTask : editTask;
-    if (saveFunction(task)) {
-      getTasksFromStore();
-    }
-  };
-
-  const handleDeleteTask = (taskId: number): void => {
-    if (deleteTask(taskId)) {
-      getTasksFromStore();
-    }
-  };
+  const { handleSave, handleDeleteTask } = useTaskHandlers({
+    getTasksFromStore,
+  })
 
   const { scrollableWrapperRef, handleClickPreviousWeek, handleClickNextWeek } =
     useWeekContainer({
@@ -80,31 +73,25 @@ export const Week: FC = ({}) => {
   return (
     <div className="wrapper">
       <h1 className="week-block">
-        <Button
-          size="small"
-          className={classes.margin}
-          onClick={handleClickPreviousWeek}
-        >
-          <ArrowBackIcon />
-        </Button>
+        <IconButton aria-label="delete" className={classes.margin} onClick={handleClickPreviousWeek}>
+          <ArrowBackIcon fontSize="large"/>
+        </IconButton>
         <span className="week-name">
           {`${getFormatDay(currentWeek[0])} - ${getFormatDay(currentWeek[6])}`}
         </span>
-        <Button
-          size="small"
-          className={classes.margin}
-          onClick={handleClickNextWeek}
-        >
-          <ArrowForwardIcon />
-        </Button>
+        <IconButton aria-label="delete" className={classes.margin} onClick={handleClickNextWeek}>
+          <ArrowForwardIcon fontSize="large"/>
+        </IconButton>
       </h1>
       <div className="weeks" ref={scrollableWrapperRef}>
         <div className="week">
           {previousWeek.map((day) => (
             <div className="day">
               <div className="content-day-wrapper">
-                <h4>{getFormatDay(day)}</h4>
-                <h4>{dayInWeek(day)}</h4>
+                <div className="day-headline">
+                  <h4>{getFormatDay(day)}</h4>
+                  <h6>{dayInWeek(day)}</h6>
+                </div>
                 <CalendarCell
                   day={day}
                   dayTasks={getTasksByDay(tasks, day)}
@@ -119,8 +106,10 @@ export const Week: FC = ({}) => {
           {currentWeek.map((day) => (
             <div className="day">
               <div className="content-day-wrapper">
-                <h4>{getFormatDay(day)}</h4>
-                <h4>{dayInWeek(day)}</h4>
+                <div className="day-headline">
+                  <h4>{getFormatDay(day)}</h4>
+                  <h6>{dayInWeek(day)}</h6>
+                </div>
                 <CalendarCell
                   day={day}
                   dayTasks={getTasksByDay(tasks, day)}
@@ -135,8 +124,10 @@ export const Week: FC = ({}) => {
           {nextWeek.map((day) => (
             <div className="day">
               <div className="content-day-wrapper">
-                <h4>{getFormatDay(day)}</h4>
-                <h4>{dayInWeek(day)}</h4>
+                <div className="day-headline">
+                  <h4>{getFormatDay(day)}</h4>
+                  <h6>{dayInWeek(day)}</h6>
+                </div>
                 <CalendarCell
                   day={day}
                   dayTasks={getTasksByDay(tasks, day)}
